@@ -1,10 +1,20 @@
 import { useState } from "react";
 
 export default function UserInput() {
-  const { result, setResult } = useState("");
+  const [useInput, setUserInput] = useState({
+    initialInvestment: 1000,
+    annualInvestment: 1200,
+    expectedReturn: 6,
+    duration: 10,
+  });
 
-  function handleChange(event) {
-    setResult(event.target.value);
+  function handleChange(inputIndentifier, newValue) {
+    setUserInput((prevUserInput) => {
+      return {
+        ...prevUserInput,
+        [inputIndentifier]: newValue,
+      };
+    });
   }
 
   return (
@@ -15,26 +25,46 @@ export default function UserInput() {
           <input
             type="number"
             required
-            value={result}
-            onChange={handleChange}
+            value={useInput.initialInvestment}
+            onChange={(event) =>
+              handleChange("initialInvestment", event.target.value)
+            }
           />
         </p>
         <p>
           <label>Annual investment</label>
-          <input type="number" required />
+          <input
+            type="number"
+            required
+            value={useInput.annualInvestment}
+            onChange={(event) =>
+              handleChange("annualInvestment", event.target.value)
+            }
+          />
         </p>
       </div>
       <div className="input-group">
         <p>
           <label>Expected investment</label>
-          <input type="number" required />
+          <input
+            type="number"
+            required
+            value={useInput.expectedReturn}
+            onChange={(event) =>
+              handleChange("expectedReturn", event.target.value)
+            }
+          />
         </p>
         <p>
           <label>Duation</label>
-          <input type="number" required />
+          <input
+            type="number"
+            required
+            value={useInput.duration}
+            onChange={(event) => handleChange("duration", event.target.value)}
+          />
         </p>
       </div>
-      <p>{result}</p>
     </section>
   );
 }
